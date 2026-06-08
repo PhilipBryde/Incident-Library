@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Incident_Library.VIEWMODELS_LOGIC_;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -7,6 +8,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
     public partial class EditIncidentReport : Page
     {
         public int? IncidentId { get; set; } = null;
+        private readonly IncidentExplorerViewModel _vm = new IncidentExplorerViewModel();
 
         public EditIncidentReport()
         {
@@ -56,7 +58,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             labelsPanel.Children.Insert(insertIndex, badge);
         }
 
-        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        private async void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtTitle.Text))
             {
@@ -67,6 +69,23 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             }
 
             txtValidationError.Visibility = Visibility.Collapsed;
+
+            try
+            {
+                await _vm.SaveIncidentAsync(
+                    txtTitle.Text,
+                    txtHowDiscovered.Text,
+                    txtWhatIsIncident.Text,
+                    txtHowResolved.Text,
+                    1
+                    );
+                MessageBox.Show("Incident Created");
+                
+            }
+            catch
+            {
+                MessageBox.Show("Incident Could not be saved");
+            }
 
             // TODO: build IncidentReport object and save
             // var report = new IncidentReport { Title = txtTitle.Text, ... };
@@ -80,5 +99,6 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
         {
             NavigationService?.GoBack();
         }
+
     }
 }

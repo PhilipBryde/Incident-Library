@@ -105,15 +105,6 @@
                          VerticalScrollBarVisibility="Auto"
                          Margin="0,0,0,12"/>
 
-                <!-- How did it happen? -->
-                <TextBlock Text="How did the incident happen?" Style="{StaticResource FieldLabel}"/>
-                <TextBox x:Name="txtHowDidItHappen"
-                         Style="{StaticResource ClassicTextBox}"
-                         Height="70" TextWrapping="Wrap"
-                         AcceptsReturn="True"
-                         VerticalScrollBarVisibility="Auto"
-                         Margin="0,0,0,12"/>
-
                 <!-- How was it discovered? -->
                 <TextBlock Text="How did you discover the incident?" Style="{StaticResource FieldLabel}"/>
                 <TextBox x:Name="txtHowDiscovered"

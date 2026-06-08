@@ -9,15 +9,15 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
         public UnderReview()
         {
             InitializeComponent();
-            LoadIncidents();
+            LoadIncidentsAsync();
             // TODO: DataContext = new IncidentExplorerViewModel();
             // await ViewModel.LoadIncidentsByStatusAsync(2); // 2 = Under Review     
         }
 
-       private void LoadIncidents()
+       private async Task LoadIncidentsAsync()
         {
-            var viewModel = new IncidentViewModel();
-            var incidents = viewModel.GetByStatus(2);
+            var viewModel = new IncidentExplorerViewModel();
+            var incidents = await viewModel.GetByStatusAsync(2);
 
             if (incidents.Count == 0)
             {
