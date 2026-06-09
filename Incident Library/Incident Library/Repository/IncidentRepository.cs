@@ -54,20 +54,20 @@ namespace Incident_Library.Repository
             await connection.CloseAsync();
         }
 
-        public void Delete(IncidentReport i) //Sletter incident fra databasen
+        public async Task DeleteAsync(IncidentReport i) //Sletter incident fra databasen
         {
             using var connection = new SqliteConnection("Data Source=IncidentLibrary.db;");
-            connection.Open();
+            await connection.OpenAsync();
             using var command = connection.CreateCommand();
             command.CommandText = "DELETE FROM Incident WHERE IncidentID = @id";
             command.Parameters.AddWithValue("@id", i.Id);
-            command.ExecuteNonQuery();
+            await command.ExecuteNonQueryAsync();
         }
 
-        public void Update(IncidentReport i) //Opdaterer databasen
+        public async Task UpdateAsync(IncidentReport i) //Opdaterer databasen
         {
             using var connection = new SqliteConnection("Data Source=IncidentLibrary.db;");
-            connection.Open();
+            await connection.OpenAsync();
             using var command = new SqliteCommand("UPDATE Incident SET Title = @Title, HowDiscovered = @HowDiscovered, WhatIsIncident = @WhatIsIncident, HowResolved = @HowResolved, StatusID = @StatusID WHERE IncidentID = @id", connection);
             command.Parameters.AddWithValue("@Title", i.Title);
             command.Parameters.AddWithValue("@HowDiscovered", i.HowDiscovered);
@@ -76,7 +76,7 @@ namespace Incident_Library.Repository
             command.Parameters.AddWithValue("@StatusID", i.Status);
             command.Parameters.AddWithValue("@id", i.Id);
             
-            command.ExecuteNonQuery();
+            await command.ExecuteNonQueryAsync();
         }
     }
 }

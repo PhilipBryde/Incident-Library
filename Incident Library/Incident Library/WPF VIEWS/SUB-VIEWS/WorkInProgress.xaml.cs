@@ -29,7 +29,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
 
         private async Task LoadIncidentsAsync()
         {
-            var viewModel = new IncidentExplorerViewModel();
+            var viewModel = new IncidentViewModel();
             var incidents = await viewModel.GetByStatusAsync(1);
 
             if (incidents.Count == 0)

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Incident_Library.MODELS__Data_;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Incident_Library.WPF_VIEWS
@@ -55,7 +56,8 @@ namespace Incident_Library.WPF_VIEWS
 
             private void BtnNewIncident_Click(object sender, RoutedEventArgs e)
         {
-            ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.EditIncidentReport());
+            var newIncident = new IncidentReport();
+            ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.EditIncidentReport(newIncident));
         }
         
 

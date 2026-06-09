@@ -30,5 +30,10 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
 
             await _repo.CreateAsync(incident);
         }
+
+        public async Task<List<IncidentReport>> GetAllAsync()
+        {
+            return await _repo.ReadAsync();
+        }
     }
 }

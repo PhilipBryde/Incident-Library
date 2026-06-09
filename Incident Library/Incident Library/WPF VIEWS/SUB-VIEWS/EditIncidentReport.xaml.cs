@@ -1,4 +1,5 @@
-﻿using Incident_Library.VIEWMODELS_LOGIC_;
+﻿using Incident_Library.MODELS__Data_;
+using Incident_Library.VIEWMODELS_LOGIC_;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -8,11 +9,17 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
     public partial class EditIncidentReport : Page
     {
         public int? IncidentId { get; set; } = null;
-        private readonly IncidentExplorerViewModel _vm = new IncidentExplorerViewModel();
+        private readonly EditIncidentViewModel _vm;
 
-        public EditIncidentReport()
+        public EditIncidentReport(IncidentReport i)
         {
             InitializeComponent();
+            _vm = new EditIncidentViewModel(i);
+
+            txtTitle.Text = i.Title;
+            txtHowDiscovered.Text = i.HowDiscovered;
+            txtWhatIsIncident.Text = i.WhatIsIncident;
+            txtHowResolved.Text = i.HowResolved;
         }
 
         public EditIncidentReport(int incidentId) : this()
@@ -21,6 +28,14 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             // TODO: load existing incident data into fields
             // var report = await ViewModel.GetIncidentAsync(incidentId);
             // txtTitle.Text = report.Title; etc.
+        }
+
+        public EditIncidentReport(EditIncidentReport? incident)
+        {
+        }
+
+        public EditIncidentReport()
+        {
         }
 
         private void BtnAddLabel_Click(object sender, RoutedEventArgs e)
@@ -60,32 +75,40 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
 
         private async void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtTitle.Text))
-            {
-                txtValidationError.Text = "Title is required.";
-                txtValidationError.Visibility = Visibility.Visible;
-                txtTitle.Focus();
-                return;
-            }
+            _vm.Incident.Title = txtTitle.Text;
+            _vm.Incident.HowDiscovered = txtHowDiscovered.Text;
+            _vm.Incident.WhatIsIncident = txtWhatIsIncident.Text;
+            _vm.Incident.HowResolved = txtHowResolved.Text;
+            _vm.Incident.Status = cmbStatus.SelectedIndex + 1;
 
-            txtValidationError.Visibility = Visibility.Collapsed;
+            await _vm.SaveAsync();
 
-            try
-            {
-                await _vm.SaveIncidentAsync(
-                    txtTitle.Text,
-                    txtHowDiscovered.Text,
-                    txtWhatIsIncident.Text,
-                    txtHowResolved.Text,
-                    1
-                    );
-                MessageBox.Show("Incident Created");
+            //if (string.IsNullOrWhiteSpace(txtTitle.Text))
+            //{
+            //    txtValidationError.Text = "Title is required.";
+            //    txtValidationError.Visibility = Visibility.Visible;
+            //    txtTitle.Focus();
+            //    return;
+            //}
+
+            //txtValidationError.Visibility = Visibility.Collapsed;
+
+            //try
+            //{
+            //    await _vm.SaveIncidentAsync(
+            //        txtTitle.Text,
+            //        txtHowDiscovered.Text,
+            //        txtWhatIsIncident.Text,
+            //        txtHowResolved.Text,
+            //        1
+            //        );
+            //    MessageBox.Show("Incident Created");
                 
-            }
-            catch
-            {
-                MessageBox.Show("Incident Could not be saved");
-            }
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Incident Could not be saved");
+            //}
 
             // TODO: build IncidentReport object and save
             // var report = new IncidentReport { Title = txtTitle.Text, ... };
@@ -100,5 +123,15 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             NavigationService?.GoBack();
         }
 
+        private async void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            var warning = MessageBox.Show("Are you sure you want to delete this incident?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if(warning == MessageBoxResult.Yes)
+            {
+                await _vm.DeleteAsync();
+                NavigationService.GoBack();
+            }
+        }
     }
 }
