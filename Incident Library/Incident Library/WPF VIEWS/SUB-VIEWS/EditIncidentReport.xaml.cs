@@ -19,7 +19,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             txtTitle.Text = i.Title;
             txtHowDiscovered.Text = i.HowDiscovered;
             txtWhatIsIncident.Text = i.WhatIsIncident;
-            txtHowResolved.Text = i.HowResolved;
+            txtHowResolved.Text = i.HowResolved; 
         }
 
         public EditIncidentReport(int incidentId) : this()
