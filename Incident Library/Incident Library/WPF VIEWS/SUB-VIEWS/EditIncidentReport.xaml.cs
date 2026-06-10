@@ -103,7 +103,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             //        1
             //        );
             //    MessageBox.Show("Incident Created");
-                
+
             //}
             //catch
             //{
@@ -115,6 +115,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             // await ViewModel.SaveAsync(report);
 
             // Navigate back
+            
             NavigationService?.GoBack();
         }
 

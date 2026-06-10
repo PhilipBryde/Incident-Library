@@ -22,9 +22,15 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
         public WorkInProgress()
         {
             InitializeComponent();
-            LoadIncidentsAsync();
+            //LoadIncidentsAsync();
+            this.Loaded += Page_Loaded;
             // TODO: DataContext = new IncidentExplorerViewModel();
             // await ViewModel.LoadIncidentsByStatusAsync(1); // 1 = Work In Progress
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await LoadIncidentsAsync();
         }
 
         private async Task LoadIncidentsAsync()
