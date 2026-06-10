@@ -81,23 +81,7 @@ namespace Incident_Library.WPF_VIEWS
             }
         }
 
-        private void BtnSearch_Click(object sender, RoutedEventArgs e)
-        {
-            RunSearch();
-        }
-
-        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
-        }
-
-        private void RunSearch()
-        {
-            string query = txtSearch.Text.Trim();
-            if (string.IsNullOrEmpty(query)) return;
-            txtStatus.Text = $"Searching for: \"{query}\"...";
-            // TODO: call IncidentExplorerViewModel.SearchAsync(query)
-        }
+       
 
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {
