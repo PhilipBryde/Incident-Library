@@ -21,6 +21,7 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
         {
             if (Incident.Id == 0)
             {
+                Incident.CreatedDate = DateTime.Now;
                 await _repo.CreateAsync(Incident);
             }
             else
