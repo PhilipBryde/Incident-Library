@@ -44,7 +44,7 @@ namespace Incident_Library.Repository
             SqliteConnection connection = new SqliteConnection("Data Source=IncidentLibrary.db;");
             await connection.OpenAsync();
 
-            SqliteCommand command = new SqliteCommand("INSERT INTO Incident (Title, HowDiscovered, WhatIsIncident, HowResolved, StatusID) VALUES (@Title, @HowDiscovered, @WhatIsIncident, @HowResolved, @StatusID, @CreatedDate)", connection);
+            SqliteCommand command = new SqliteCommand("INSERT INTO Incident (Title, HowDiscovered, WhatIsIncident, HowResolved, StatusID, CreatedDate) VALUES (@Title, @HowDiscovered, @WhatIsIncident, @HowResolved, @StatusID, @CreatedDate)", connection);
             command.Parameters.AddWithValue("@Title", i.Title);
             command.Parameters.AddWithValue("@HowDiscovered", i.HowDiscovered);
             command.Parameters.AddWithValue("@WhatIsIncident", i.WhatIsIncident);
