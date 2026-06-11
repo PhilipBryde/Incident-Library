@@ -159,12 +159,6 @@
                        Foreground="#888" FontSize="13"
                        HorizontalAlignment="Center" VerticalAlignment="Center"
                        Visibility="Collapsed"/>
-            
-            
-
-            
-           
-
         </Grid>
     </Grid>
 </Page>

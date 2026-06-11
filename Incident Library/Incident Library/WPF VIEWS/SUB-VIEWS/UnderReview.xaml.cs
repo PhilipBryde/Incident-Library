@@ -57,15 +57,5 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
                 NavigationService?.Navigate(new EditIncidentReport(selected, loggedInUser));
             }
         }
-
-        private void SortDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (SortDropdown.SelectedIndex == 0)
-                _vm.SetSortStrategy(new SortbyDateNewest());
-            else
-                _vm.SetSortStrategy(new SortByDateOldest());
-
-            LoadIncidentsAsync();
-        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Incident_Library.MODELS__Data_;
+using Incident_Library.WPF_VIEWS.SUB_VIEWS;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -18,7 +19,7 @@ namespace Incident_Library.WPF_VIEWS
             _activeNavButton = btnWorkInProgress;
             txtPageTitle.Text = "Work In Progress";
             txtCurrentUser.Text = $"Logged in as: {LoggedInUser?.Name}";
-            ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.WorkInProgress());
+            ContentArea.Navigate(new WorkInProgress());
         }
 
         // Navigation
@@ -42,19 +43,19 @@ namespace Incident_Library.WPF_VIEWS
             switch (tag)
             {
                 case "WorkInProgress":
-                    ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.WorkInProgress());
+                    ContentArea.Navigate(new WorkInProgress());
                     break;
                 case "UnderReview":
-                    ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.UnderReview());
+                    ContentArea.Navigate(new UnderReview());
                     break;
                 case "AwaitingApproval":
-                    ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.AwaitingApproval());
+                    ContentArea.Navigate(new AwaitingApproval());
                     break;
                 case "Archived":
-                    ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.Archived());
+                    ContentArea.Navigate(new Archived());
                     break;
                 case "Admin":
-                    ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.AdminView());
+                    ContentArea.Navigate(new AdminView());
                     break;
             }
         }
@@ -62,27 +63,9 @@ namespace Incident_Library.WPF_VIEWS
             private void BtnNewIncident_Click(object sender, RoutedEventArgs e)
         {
             var newIncident = new IncidentReport();
-            ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.EditIncidentReport(newIncident));
+            ContentArea.Navigate(new EditIncidentReport(newIncident, LoggedInUser));
         }
         
-
-       
-
-        private void BtnDelete_Click(object sender, RoutedEventArgs e)
-        {
-            var result = MessageBox.Show(
-                "Are you sure you want to delete this incident?",
-                "Confirm Delete",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Warning);
-
-            if (result == MessageBoxResult.Yes)
-            {
-                // TODO: call IncidentRepository.DeleteAsync(selectedId)
-                txtStatus.Text = "Incident deleted.";
-            }
-        }
-
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show(
@@ -98,8 +81,6 @@ namespace Incident_Library.WPF_VIEWS
                 this.Close();
             }
         }
-
-
 
         public void SetIncidentCount(int count)
         {
