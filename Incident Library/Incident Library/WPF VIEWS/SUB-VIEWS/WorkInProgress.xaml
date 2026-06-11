@@ -6,8 +6,7 @@
       mc:Ignorable="d"
       Background="White"
       FontFamily="Segoe UI"
-      FontSize="13"
-      Loaded="Page_Loaded">
+      FontSize="13">
 
     <Grid>
         <Grid.RowDefinitions>
