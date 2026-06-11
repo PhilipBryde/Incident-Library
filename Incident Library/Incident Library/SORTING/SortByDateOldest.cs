@@ -12,7 +12,7 @@ namespace Incident_Library.SORTING
         {
             for (int i = 0; i < incidents.Count - 1; i++)
             {
-                for (int j = 0; j < incidents.Count - i; j++)
+                for (int j = 0; j < incidents.Count - 1 - i; j++)
                 {
                     if (incidents[j].CreatedDate > incidents[j + 1].CreatedDate)
                     {
