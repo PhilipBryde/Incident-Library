@@ -112,6 +112,17 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
                 btnApprove.Visibility = Visibility.Visible;
                 btnDecline.Visibility = Visibility.Visible;
             }
+            // Status 3 = Awaiting Approval - almindelige brugere kan kun læse og knappers visning bliver fjernet
+            else if (status == 3 && !isAdmin)
+            {
+                btnSave.Visibility = Visibility.Collapsed;
+                btnDelete.Visibility = Visibility.Collapsed;
+                txtTitle.IsReadOnly = true;
+                txtWhatIsIncident.IsReadOnly = true;
+                txtHowDiscovered.IsReadOnly = true;
+                txtHowResolved.IsReadOnly = true;
+                cmbStatus.IsEnabled = false;
+            }
             // Status 4 = Archived - kun admin kan redigere
             else if (status == 4 && !isAdmin)
             {
