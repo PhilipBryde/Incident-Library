@@ -25,9 +25,6 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
         public EditIncidentReport(int incidentId) : this()
         {
             IncidentId = incidentId;
-            // TODO: load existing incident data into fields
-            // var report = await ViewModel.GetIncidentAsync(incidentId);
-            // txtTitle.Text = report.Title; etc.
         }
 
         public EditIncidentReport(EditIncidentReport? incident)
@@ -80,7 +77,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             }
         }
 
-        private async void BtnSave_Click(object sender, RoutedEventArgs e)
+        private async void BtnSave_Click(object sender, RoutedEventArgs e) //Save Knap; sender brugers input videre til ViewModel
         {
             _vm.Incident.Title = txtTitle.Text;
             _vm.Incident.HowDiscovered = txtHowDiscovered.Text;
@@ -89,41 +86,8 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             _vm.Incident.Status = cmbStatus.SelectedIndex + 1;
 
             await _vm.SaveAsync();
-
-            //if (string.IsNullOrWhiteSpace(txtTitle.Text))
-            //{
-            //    txtValidationError.Text = "Title is required.";
-            //    txtValidationError.Visibility = Visibility.Visible;
-            //    txtTitle.Focus();
-            //    return;
-            //}
-
-            //txtValidationError.Visibility = Visibility.Collapsed;
-
-            //try
-            //{
-            //    await _vm.SaveIncidentAsync(
-            //        txtTitle.Text,
-            //        txtHowDiscovered.Text,
-            //        txtWhatIsIncident.Text,
-            //        txtHowResolved.Text,
-            //        1
-            //        );
-            //    MessageBox.Show("Incident Created");
-
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Incident Could not be saved");
-            //}
-
-            // TODO: build IncidentReport object and save
-            // var report = new IncidentReport { Title = txtTitle.Text, ... };
-            // await ViewModel.SaveAsync(report);
-
-            // Navigate back
             
-            NavigationService?.GoBack();
+            NavigationService?.GoBack(); //Går tilbage til den tidligere page
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)

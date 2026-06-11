@@ -7,6 +7,9 @@ using Incident_Library.MODELS__Data_;
 
 namespace Incident_Library.Repository
 {
+    /// <summary>
+    /// Repository klasse med CRUD-kald, tager og gemmer data til/fra databasen
+    /// </summary>
     public class IncidentRepository
     {
 
@@ -16,7 +19,7 @@ namespace Incident_Library.Repository
         //    string dbPath = Path.Combine(baseDir, "IncidentLibrary.db");
         //    return $"Data Source={dbPath};";
         //}
-        public async Task<List<IncidentReport>> ReadAsync() //Læser fra databasen og sætter den ind i en liste
+        public async Task<List<IncidentReport>> ReadAsync() //Læser fra databasen og returnerer dem som en liste af IncidentReport-objekter
         {
             var incidentList = new List<IncidentReport>();
             using var conncetion = new SqliteConnection("Data Source = IncidentLibrary.db;");
@@ -39,7 +42,7 @@ namespace Incident_Library.Repository
             return incidentList;
         }
 
-        public async Task CreateAsync (IncidentReport i) //Opretter nyt incident til databasen; bemærk at vi siger Close her fordi vi ikke bruger 'using var' (tilføjede bare for at vise at vi kunne)
+        public async Task CreateAsync (IncidentReport i) //Opretter nyt incident til databasen; bemærk at vi bruger en alternativ forbindelsesstrukter uden using var, viser en anden måde at åbne og lukke
         {
             SqliteConnection connection = new SqliteConnection("Data Source=IncidentLibrary.db;");
             await connection.OpenAsync();
