@@ -5,6 +5,10 @@ using System.IO;
 
 namespace Incident_Library.MODELS__Data_
 {
+    /// <summary>
+    /// Datamodel der repræsenterer en incident i systemet
+    /// Bruges af IncidentRepository til database og ViewModels til sortering og visning
+    /// </summary>
     public class IncidentReport
     {
         public int Id { get; set; }

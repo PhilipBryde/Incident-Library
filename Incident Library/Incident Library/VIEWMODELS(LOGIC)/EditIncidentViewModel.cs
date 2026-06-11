@@ -17,7 +17,7 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
             Incident = i;
         }
 
-        public async Task SaveAsync()
+        public async Task SaveAsync() //asynkron metode der gemmer incident; sendes videre til Repository
         {
             if (Incident.Id == 0)
             {
@@ -30,7 +30,7 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
             }
         }
 
-        public async Task DeleteAsync()
+        public async Task DeleteAsync() //Asynkron metode der sletter incident; sendes videre til Repository
         {
             await _repo.DeleteAsync(Incident);
         }

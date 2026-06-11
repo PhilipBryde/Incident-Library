@@ -15,7 +15,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             // await ViewModel.LoadUsersAsync();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e) //Genindlæser siden med ALT DATA fremfor at der bliver taget fra cachen
         {
             var all = await _vm.GetAllAsync();
             IncidentList.ItemsSource = all;

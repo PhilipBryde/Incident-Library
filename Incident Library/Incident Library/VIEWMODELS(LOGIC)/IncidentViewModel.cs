@@ -19,15 +19,16 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
             _sortStrategy = strategy; 
         }
 
-        public async Task<List<IncidentReport>> GetByStatusAsync(int statusId)
+        public async Task<List<IncidentReport>> GetByStatusAsync(int statusId) //Henter incident via StatusID; sendes videre til Repository
         {
             var all = await _repo.ReadAsync();
             var filtered = all.Where(i => i.Status == statusId).ToList();
-            return all.Where(i => i.Status == statusId).ToList();
+            return _sortStrategy.Sort(filtered);
+            //return all.Where(i => i.Status == statusId).ToList();
 
         }
 
-        public async Task SaveIncidentAsync(string title, string howDiscovered, string whatIsIncident, string howResolved, int statusId)
+        public async Task SaveIncidentAsync(string title, string howDiscovered, string whatIsIncident, string howResolved, int statusId) //Brugerens input bliver lavet til et IncidentReport-objekt
         {
             IncidentReport incident = new IncidentReport
             {
@@ -39,7 +40,7 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
                 CreatedDate = DateTime.Now
             };
 
-            await _repo.CreateAsync(incident);
+            await _repo.CreateAsync(incident); //Kalder Create i Repository
         }
 
         public async Task<List<IncidentReport>> GetAllAsync()

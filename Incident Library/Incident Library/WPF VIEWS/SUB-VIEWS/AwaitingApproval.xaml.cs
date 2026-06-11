@@ -1,61 +1,42 @@
-﻿using Incident_Library.SORTING;
-using Incident_Library.VIEWMODELS_LOGIC_;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Incident_Library.MODELS__Data_;
+using Incident_Library.VIEWMODELS_LOGIC_;
 
 namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
 {
     public partial class AwaitingApproval : Page
     {
-        private IncidentViewModel _viewModel = new IncidentViewModel();
+        private readonly IncidentViewModel _vm = new IncidentViewModel();
+
         public AwaitingApproval()
         {
             InitializeComponent();
-            SortDropdown.SelectedIndex = 0;
-            LoadIncidentsAsync();
-            // TODO: DataContext = new IncidentExplorerViewModel();
-            // await ViewModel.LoadIncidentsByStatusAsync(4); // 4 = Awaiting Approval
+            Loaded += async (s, e) => await LoadIncidentsAsync();
         }
 
-        private async void LoadIncidentsAsync()
+        private async System.Threading.Tasks.Task LoadIncidentsAsync()
         {
-            var incidents = await _viewModel.GetByStatusAsync(4);
+            List<IncidentReport> incidents = await _vm.GetByStatusAsync(4);
             if (incidents.Count == 0)
             {
                 txtEmpty.Visibility = Visibility.Visible;
+                IncidentList.Visibility = Visibility.Collapsed;
             }
             else
             {
                 txtEmpty.Visibility = Visibility.Collapsed;
+                IncidentList.Visibility = Visibility.Visible;
                 IncidentList.ItemsSource = incidents;
             }
         }
 
-        private void SortDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void IncidentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SortDropdown.SelectedIndex == 0)
-                _viewModel.SetSortStrategy(new SortbyDateNewest());
-            else
-                _viewModel.SetSortStrategy(new SortByDateOldest());
-
-            LoadIncidentsAsync();
-        }
-
-        private void BtnApprove_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.Tag is int id)
+            if (IncidentList.SelectedItem is IncidentReport selected)
             {
-                // TODO: await ViewModel.ApproveIncidentAsync(id);
-                // Moves incident to Archived status
-            }
-        }
-
-        private void BtnReject_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.Tag is int id)
-            {
-                // TODO: await ViewModel.RejectIncidentAsync(id);
-                // Moves incident back to Work In Progress
+                NavigationService?.Navigate(new EditIncidentReport(selected));
             }
         }
     }
