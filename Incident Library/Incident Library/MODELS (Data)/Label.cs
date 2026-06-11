@@ -15,10 +15,6 @@ namespace Incident_Library.MODELS__Data_
                 _labelId = labelId;
                 _name = name;
             }
-
-            public int GetLabelId() => _labelId;
-            public string GetName() => _name;
-            public void SetName(string name) { _name = name; }
         
 
     }
