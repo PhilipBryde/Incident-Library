@@ -34,6 +34,14 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             }
         }
 
+        private void IncidentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IncidentList.SelectedItem is IncidentReport selected)
+            {
+                NavigationService?.Navigate(new EditIncidentReport(selected));
+            }
+        }
+
         private void SortDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (SortDropdown.SelectedIndex == 0)

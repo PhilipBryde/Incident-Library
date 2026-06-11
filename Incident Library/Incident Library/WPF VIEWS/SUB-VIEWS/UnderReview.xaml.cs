@@ -16,7 +16,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             Loaded += async (s, e) => await LoadIncidentsAsync();
         }
 
-        private async System.Threading.Tasks.Task LoadIncidentsAsync()
+        private async Task LoadIncidentsAsync()
         {
             List<IncidentReport> incidents = await _vm.GetByStatusAsync(2);
             if (incidents.Count == 0)
