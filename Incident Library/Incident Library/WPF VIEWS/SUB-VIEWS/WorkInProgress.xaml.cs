@@ -1,50 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Incident_Library.Repository;
+using Incident_Library.MODELS__Data_;
 using Incident_Library.VIEWMODELS_LOGIC_;
 
 namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
 {
-    /// <summary>
-    /// Interaction logic for WorkInProgress.xaml
-    /// </summary>
-    public partial class WorkInProgress : Page 
+    public partial class WorkInProgress : Page
     {
+        private readonly IncidentViewModel _vm = new IncidentViewModel();
+
         public WorkInProgress()
         {
             InitializeComponent();
-            //LoadIncidentsAsync();
-            this.Loaded += Page_Loaded;
-            // TODO: DataContext = new IncidentExplorerViewModel();
-            // await ViewModel.LoadIncidentsByStatusAsync(1); // 1 = Work In Progress
+            Loaded += async (s, e) => await LoadIncidentsAsync();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private async System.Threading.Tasks.Task LoadIncidentsAsync()
         {
-            await LoadIncidentsAsync();
-        }
-
-        private async Task LoadIncidentsAsync()
-        {
-            var viewModel = new IncidentViewModel();
-            var incidents = await viewModel.GetByStatusAsync(1);
-
+            List<IncidentReport> incidents = await _vm.GetByStatusAsync(1); // 1 = Work In Progress
             if (incidents.Count == 0)
             {
-                txtEmpty.Visibility = System.Windows.Visibility.Visible;
+                txtEmpty.Visibility = Visibility.Visible;
+                IncidentList.Visibility = Visibility.Collapsed;
             }
             else
             {
+                txtEmpty.Visibility = Visibility.Collapsed;
+                IncidentList.Visibility = Visibility.Visible;
                 IncidentList.ItemsSource = incidents;
+            }
+        }
+
+        private void IncidentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IncidentList.SelectedItem is IncidentReport selected)
+            {
+                NavigationService?.Navigate(new EditIncidentReport(selected));
             }
         }
     }

@@ -1,33 +1,43 @@
-﻿using Incident_Library.MODELS__Data_;
-using Incident_Library.VIEWMODELS_LOGIC_;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
+using Incident_Library.MODELS__Data_;
+using Incident_Library.VIEWMODELS_LOGIC_;
 
 namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
 {
     public partial class UnderReview : Page
     {
+        private readonly IncidentViewModel _vm = new IncidentViewModel();
+
         public UnderReview()
         {
             InitializeComponent();
-            LoadIncidentsAsync();
-            // TODO: DataContext = new IncidentExplorerViewModel();
-            // await ViewModel.LoadIncidentsByStatusAsync(2); // 2 = Under Review     
+            Loaded += async (s, e) => await LoadIncidentsAsync();
         }
 
-       private async Task LoadIncidentsAsync()
+        private async System.Threading.Tasks.Task LoadIncidentsAsync()
         {
-            var viewModel = new IncidentViewModel();
-            var incidents = await viewModel.GetByStatusAsync(2);
-
+            List<IncidentReport> incidents = await _vm.GetByStatusAsync(2);
             if (incidents.Count == 0)
             {
-                txtEmpty.Visibility = System.Windows.Visibility.Visible;
+                txtEmpty.Visibility = Visibility.Visible;
+                IncidentList.Visibility = Visibility.Collapsed;
             }
             else
             {
+                txtEmpty.Visibility = Visibility.Collapsed;
+                IncidentList.Visibility = Visibility.Visible;
                 IncidentList.ItemsSource = incidents;
             }
         }
 
+        private void IncidentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IncidentList.SelectedItem is IncidentReport selected)
+            {
+                NavigationService?.Navigate(new EditIncidentReport(selected));
+            }
+        }
     }
 }

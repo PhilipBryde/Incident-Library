@@ -1,32 +1,42 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
+using Incident_Library.MODELS__Data_;
+using Incident_Library.VIEWMODELS_LOGIC_;
 
 namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
 {
     public partial class AwaitingApproval : Page
     {
+        private readonly IncidentViewModel _vm = new IncidentViewModel();
+
         public AwaitingApproval()
         {
             InitializeComponent();
-            // TODO: DataContext = new IncidentExplorerViewModel();
-            // await ViewModel.LoadIncidentsByStatusAsync(4); // 4 = Awaiting Approval
+            Loaded += async (s, e) => await LoadIncidentsAsync();
         }
 
-        private void BtnApprove_Click(object sender, RoutedEventArgs e)
+        private async System.Threading.Tasks.Task LoadIncidentsAsync()
         {
-            if (sender is Button btn && btn.Tag is int id)
+            List<IncidentReport> incidents = await _vm.GetByStatusAsync(4);
+            if (incidents.Count == 0)
             {
-                // TODO: await ViewModel.ApproveIncidentAsync(id);
-                // Moves incident to Archived status
+                txtEmpty.Visibility = Visibility.Visible;
+                IncidentList.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                txtEmpty.Visibility = Visibility.Collapsed;
+                IncidentList.Visibility = Visibility.Visible;
+                IncidentList.ItemsSource = incidents;
             }
         }
 
-        private void BtnReject_Click(object sender, RoutedEventArgs e)
+        private void IncidentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is Button btn && btn.Tag is int id)
+            if (IncidentList.SelectedItem is IncidentReport selected)
             {
-                // TODO: await ViewModel.RejectIncidentAsync(id);
-                // Moves incident back to Work In Progress
+                NavigationService?.Navigate(new EditIncidentReport(selected));
             }
         }
     }

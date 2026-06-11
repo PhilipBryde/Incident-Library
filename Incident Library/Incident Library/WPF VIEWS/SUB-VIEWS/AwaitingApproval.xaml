@@ -14,93 +14,66 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Column headers -->
         <Border Grid.Row="0" Background="#F0F0F0"
                 BorderBrush="#ADADAD" BorderThickness="0,0,0,1">
             <Grid Margin="12,6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="200"/>
                     <ColumnDefinition Width="130"/>
-                    <ColumnDefinition Width="110"/>
-                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Title"       FontWeight="SemiBold" FontSize="12"/>
-                <TextBlock Grid.Column="1" Text="Labels"      FontWeight="SemiBold" FontSize="12"/>
-                <TextBlock Grid.Column="2" Text="Created"     FontWeight="SemiBold" FontSize="12"/>
-                <TextBlock Grid.Column="3" Text="Created By"  FontWeight="SemiBold" FontSize="12"/>
-                <TextBlock Grid.Column="4" Text="Action"      FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="0" Text="Title"          FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="1" Text="What is it?"    FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="2" Text="How Discovered" FontWeight="SemiBold" FontSize="12"/>
             </Grid>
         </Border>
 
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <ItemsControl x:Name="IncidentList">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border Background="White" BorderBrush="#DFDFDF"
-                                BorderThickness="0,0,0,1" Padding="12,8" Cursor="Hand">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="140"/>
-                                    <ColumnDefinition Width="130"/>
-                                    <ColumnDefinition Width="110"/>
-                                    <ColumnDefinition Width="100"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Title}"
-                                           FontWeight="SemiBold" TextTrimming="CharacterEllipsis"
-                                           VerticalAlignment="Center"/>
-                                <ItemsControl Grid.Column="1" ItemsSource="{Binding Labels}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Border Background="#E1E1E1" BorderBrush="#ADADAD"
-                                                    BorderThickness="1" Padding="5,1" Margin="0,0,3,0">
-                                                <TextBlock Text="{Binding Name}" FontSize="11"/>
-                                            </Border>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                                <TextBlock Grid.Column="2"
-                                           Text="{Binding CreatedDate, StringFormat={}{0:dd/MM/yyyy}}"
-                                           FontSize="12" Foreground="#555" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="3" Text="{Binding CreatedBy}"
-                                           FontSize="12" Foreground="#555"
-                                           TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
-                                <!-- Approve / Reject buttons - only visible to Admin -->
-                                <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button Content="✓"
-                                            Tag="{Binding IncidentID}"
-                                            Click="BtnApprove_Click"
-                                            Width="28" Height="22"
-                                            FontSize="12"
-                                            Background="#E1E1E1"
-                                            BorderBrush="#ADADAD"
-                                            BorderThickness="1"
-                                            Cursor="Hand"
-                                            Margin="0,0,4,0"
-                                            ToolTip="Approve"/>
-                                    <Button Content="✕"
-                                            Tag="{Binding IncidentID}"
-                                            Click="BtnReject_Click"
-                                            Width="28" Height="22"
-                                            FontSize="12"
-                                            Background="#E1E1E1"
-                                            BorderBrush="#ADADAD"
-                                            BorderThickness="1"
-                                            Cursor="Hand"
-                                            ToolTip="Reject"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+        <ListBox x:Name="IncidentList"
+                 Grid.Row="1"
+                 BorderThickness="0"
+                 Background="White"
+                 SelectionChanged="IncidentList_SelectionChanged">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#CCE4F7"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#F0F0F0"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="#DFDFDF" BorderThickness="0,0,0,1"
+                            Padding="12,10" Cursor="Hand">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="130"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Title}"
+                                       FontWeight="SemiBold"
+                                       TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{Binding WhatIsIncident}"
+                                       FontSize="12" Foreground="#555"
+                                       TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="{Binding HowDiscovered}"
+                                       FontSize="12" Foreground="#555"
+                                       TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <TextBlock Grid.Row="1" x:Name="txtEmpty"
                    Text="No incidents awaiting approval."
