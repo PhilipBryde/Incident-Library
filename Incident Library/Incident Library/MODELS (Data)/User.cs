@@ -20,5 +20,16 @@ namespace Incident_Library.MODELS__Data_
         }
         // den tomme Konstruktør er til når vi henter objekter fra databasen 
         public User() { }
+
+        // Oversætter rolle-tallet til et læsbart navn
+        public string RoleName
+        {
+            get
+            {
+                if (Role == 1) return "Admin";
+                if (Role == 2) return "User";
+                return "Unknown";
+            }
+        }
     }
 }

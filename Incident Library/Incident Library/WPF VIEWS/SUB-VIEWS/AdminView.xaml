@@ -144,7 +144,7 @@
                                     <TextBlock Grid.Column="1" Text="{Binding Name}"
                                                FontWeight="SemiBold" VerticalAlignment="Center"/>
                                     <Border Grid.Column="2" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Role}"
+                                        <TextBlock Text="{Binding RoleName}"
                                                    FontSize="12" Foreground="#555"/>
                                     </Border>
                                 </Grid>
