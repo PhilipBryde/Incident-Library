@@ -18,9 +18,9 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             Loaded += async (s, e) => await LoadIncidentsAsync();
         }
 
-        private async Task LoadIncidentsAsync()
+        private async System.Threading.Tasks.Task LoadIncidentsAsync()
         {
-            List<IncidentReport> incidents = await _vm.GetByStatusAsync(4); //4 = Archived
+            List<IncidentReport> incidents = await _vm.GetByStatusAsync(4);
             if (incidents.Count == 0)
             {
                 txtEmpty.Visibility = Visibility.Visible;
@@ -34,14 +34,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             }
         }
 
-        private void IncidentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (IncidentList.SelectedItem is IncidentReport selected)
-            {
-                NavigationService?.Navigate(new EditIncidentReport(selected));
-            }
-        }
-
+        // Opdaterer sorteringen når brugeren vælger i dropdown
         private void SortDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (SortDropdown.SelectedIndex == 0)
@@ -49,7 +42,20 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             else
                 _vm.SetSortStrategy(new SortByDateOldest());
 
-            LoadIncidentsAsync();
+            _ = LoadIncidentsAsync();
+        }
+
+        private void IncidentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IncidentList.SelectedItem is IncidentReport selected)
+            {
+                // Hent den loggede bruger fra HomePageWindow
+                User? loggedInUser = null;
+                if (Window.GetWindow(this) is HomePageWindow__Shell_ shell)
+                    loggedInUser = shell.LoggedInUser;
+
+                NavigationService?.Navigate(new EditIncidentReport(selected, loggedInUser));
+            }
         }
     }
 }

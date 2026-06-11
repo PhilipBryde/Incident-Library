@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -36,11 +37,10 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Title"          FontWeight="SemiBold" FontSize="12"/>
                 <TextBlock Grid.Column="1" Text="What is it?"    FontWeight="SemiBold" FontSize="12"/>
-                <TextBlock Grid.Column="2" Text="How Discovered" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="2" Text="Date"           FontWeight="SemiBold" FontSize="12"/>
             </Grid>
         </Border>
 
-        <!-- Incident list -->
         <ListBox x:Name="IncidentList"
                  Grid.Row="2"
                  BorderThickness="0"
@@ -78,10 +78,9 @@
                                        FontSize="12" Foreground="#555"
                                        TextTrimming="CharacterEllipsis"
                                        VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="{Binding CreatedDate, StringFormat={}{0:dd/MM/yyyy}}"
-                                        FontSize="12" Foreground="#555"
-                                        TextTrimming="CharacterEllipsis"
-                                        VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2"
+                                       Text="{Binding CreatedDate, StringFormat={}{0:dd/MM/yyyy}}"
+                                       FontSize="12" Foreground="#555" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
                 </DataTemplate>

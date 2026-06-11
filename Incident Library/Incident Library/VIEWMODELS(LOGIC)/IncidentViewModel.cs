@@ -11,7 +11,7 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
 {
    class IncidentViewModel
     {
-        private readonly IncidentRepository _repo = new IncidentRepository();
+        private readonly IIncidentRepository _repo = new IncidentRepository();
         private ISortStrategy _sortStrategy = new SortbyDateNewest();
 
         public void SetSortStrategy(ISortStrategy strategy)
