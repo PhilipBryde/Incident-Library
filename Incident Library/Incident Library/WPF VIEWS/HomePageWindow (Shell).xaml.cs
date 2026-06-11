@@ -18,6 +18,11 @@ namespace Incident_Library.WPF_VIEWS
             _activeNavButton = btnWorkInProgress;
             txtPageTitle.Text = "Work In Progress";
             txtCurrentUser.Text = $"Logged in as: {LoggedInUser?.Name}";
+            // Skjul Admin Panel hvis brugeren ikke er admin
+            if (LoggedInUser.Role != 1)
+            {
+                btnAdmin.Visibility = Visibility.Collapsed;
+            }
             ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.WorkInProgress());
         }
 
