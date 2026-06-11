@@ -31,9 +31,59 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             // Vis de rigtige knapper baseret på status og brugerrolle
             UpdateButtons(i.Status);
 
+            // Indlæs labels fra databasen når siden er klar
+            Loaded += async (s, e) => await LoadLabelsAsync();
+
         }
 
-        
+        // Indlæser labels fra databasen og viser dem som badges
+        private async Task LoadLabelsAsync()
+        {
+            await _vm.LoadLabelsAsync();
+
+            foreach (var label in _vm.Incident.Labels)
+            {
+                AddLabelBadge(label.Name);
+            }
+        }
+
+        // Tilføjer en label badge til panelet
+        private void AddLabelBadge(string labelName)
+        {
+            var badge = new Border
+            {
+                Background = Brushes.LightGray,
+                BorderBrush = Brushes.Gray,
+                BorderThickness = new Thickness(1),
+                Padding = new Thickness(6, 1, 6, 1),
+                Margin = new Thickness(0, 0, 4, 0)
+            };
+            var panel = new StackPanel { Orientation = Orientation.Horizontal };
+            panel.Children.Add(new TextBlock
+            {
+                Text = labelName,
+                FontSize = 11,
+                VerticalAlignment = VerticalAlignment.Center
+            });
+            var removeBtn = new Button
+            {
+                Content = "×",
+                FontSize = 10,
+                BorderThickness = new Thickness(0),
+                Background = Brushes.Transparent,
+                Cursor = System.Windows.Input.Cursors.Hand,
+                Margin = new Thickness(4, 0, 0, 0),
+                Padding = new Thickness(0)
+            };
+            removeBtn.Click += (s, ev) => labelsPanel.Children.Remove(badge);
+            panel.Children.Add(removeBtn);
+            badge.Child = panel;
+
+            int insertIndex = labelsPanel.Children.Count - 1;
+            labelsPanel.Children.Insert(insertIndex, badge);
+        }
+
+
 
         // Styrer hvilke knapper der vises baseret på status og om brugeren er admin
         private void UpdateButtons(int status)
@@ -80,6 +130,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
         {
         }
 
+
         private void BtnAddLabel_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new AddLabelWindow();
@@ -88,37 +139,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
 
             if (result == true)
             {
-                var badge = new Border
-                {
-                    Background = Brushes.LightGray,
-                    BorderBrush = Brushes.Gray,
-                    BorderThickness = new Thickness(1),
-                    Padding = new Thickness(6, 1, 6, 1),
-                    Margin = new Thickness(0, 0, 4, 0)
-                };
-                var panel = new StackPanel { Orientation = Orientation.Horizontal };
-                panel.Children.Add(new TextBlock
-                {
-                    Text = dialog.LabelName,
-                    FontSize = 11,
-                    VerticalAlignment = VerticalAlignment.Center
-                });
-                var removeBtn = new Button
-                {
-                    Content = "×",
-                    FontSize = 10,
-                    BorderThickness = new Thickness(0),
-                    Background = Brushes.Transparent,
-                    Cursor = System.Windows.Input.Cursors.Hand,
-                    Margin = new Thickness(4, 0, 0, 0),
-                    Padding = new Thickness(0)
-                };
-                removeBtn.Click += (s, ev) => labelsPanel.Children.Remove(badge);
-                panel.Children.Add(removeBtn);
-                badge.Child = panel;
-
-                int insertIndex = labelsPanel.Children.Count - 1;
-                labelsPanel.Children.Insert(insertIndex, badge);
+                AddLabelBadge(dialog.LabelName);
             }
         }
 
@@ -162,6 +183,23 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             _vm.Incident.WhatIsIncident = txtWhatIsIncident.Text;
             _vm.Incident.HowResolved = txtHowResolved.Text;
             _vm.Incident.Status = cmbStatus.SelectedIndex + 1;
+
+            // Saml labels fra panelet og gem dem på incident objektet
+            _vm.Incident.Labels.Clear();
+            foreach (var child in labelsPanel.Children)
+            {
+                if (child is Border badge && badge.Child is StackPanel panel)
+                {
+                    if (panel.Children[0] is TextBlock txt)
+                    {
+                        _vm.Incident.Labels.Add(new Incident_Library.MODELS__Data_.Label // _vm.Incident.Labels.Add(new Label = synes åbenbart det var dårligt skrevet
+                        {
+                            Name = txt.Text,
+                            IncidentId = _vm.Incident.Id
+                        });
+                    }
+                }
+            }
 
             await _vm.SaveAsync();
             

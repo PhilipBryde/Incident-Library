@@ -19,6 +19,9 @@ namespace Incident_Library.MODELS__Data_
         public int Status { get; set; }
 
         public DateTime CreatedDate { get; set; }
+        // Liste af labels tilknyttet dette incident
+        public List<Label> Labels { get; set; } = new List<Label>();
+
     }
 
 

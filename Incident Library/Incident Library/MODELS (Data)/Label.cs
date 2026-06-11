@@ -4,18 +4,19 @@ using System.Text;
 
 namespace Incident_Library.MODELS__Data_
 {
-    class Label
+    public class Label
     {
-        
-            private int _labelId;
-            private string _name;
+        public int LabelId { get; set; }
+        public int IncidentId { get; set; }
+        public string Name { get; set; } = string.Empty;
 
-            public Label(int labelId, string name)
-            {
-                _labelId = labelId;
-                _name = name;
-            }
-        
+        public Label() { }
 
+        public Label(int labelId, int incidentId, string name)
+        {
+            LabelId = labelId;
+            IncidentId = incidentId;
+            Name = name;
+        }
     }
 }
