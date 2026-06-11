@@ -126,30 +126,70 @@
             </StackPanel>
         </ScrollViewer>
 
-        <!-- Save / Cancel bar -->
+        <!-- Knapper nederst -->
         <Border Grid.Row="1" Background="#F0F0F0"
                 BorderBrush="#ADADAD" BorderThickness="0,1,0,0">
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Margin="16,0">
-                <TextBlock x:Name="txtValidationError"
-                           Foreground="Red" FontSize="11"
-                           VerticalAlignment="Center"
-                           Margin="0,0,12,0"
-                           Visibility="Collapsed"/>
-                <Button Content="Delete"
-                        Style="{StaticResource ClassicButton}"
-                        Click="BtnDelete_Click"
-                        Margin="0,0,8,0"/>
-                <Button Content="Save"
-                        Style="{StaticResource ClassicButton}"
-                        Click="BtnSave_Click"
-                        Margin="0,0,8,0"/>
-                <Button Content="Cancel"
-                        Style="{StaticResource ClassicButton}"
-                        Click="BtnCancel_Click"/>
-            </StackPanel>
+            <DockPanel Margin="16,0">
+
+                <!-- Venstre side: Send videre knapper -->
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            DockPanel.Dock="Left">
+                    <!-- Vises kun når status er Work In Progress (0) -->
+                    <Button x:Name="btnSendToReview"
+                            Content="Send to Review"
+                            Style="{StaticResource ClassicButton}"
+                            Click="BtnSendToReview_Click"
+                            Margin="0,0,8,0"
+                            Visibility="Collapsed"/>
+                    <!-- Vises kun når status er Under Review (1) -->
+                    <Button x:Name="btnSendToApproval"
+                            Content="Send to Approval"
+                            Style="{StaticResource ClassicButton}"
+                            Click="BtnSendToApproval_Click"
+                            Margin="0,0,8,0"
+                            Visibility="Collapsed"/>
+                    <!-- Vises kun når status er Awaiting Approval (2) og brugeren er Admin -->
+                    <Button x:Name="btnApprove"
+                            Content="Approve"
+                            Style="{StaticResource ClassicButton}"
+                            Click="BtnApprove_Click"
+                            Margin="0,0,8,0"
+                            Visibility="Collapsed"/>
+                    <Button x:Name="btnDecline"
+                            Content="Decline"
+                            Style="{StaticResource ClassicButton}"
+                            Click="BtnDecline_Click"
+                            Margin="0,0,8,0"
+                            Visibility="Collapsed"/>
+                </StackPanel>
+
+                <!-- Højre side: Delete, Save, Cancel -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            DockPanel.Dock="Right">
+                    <TextBlock x:Name="txtValidationError"
+                               Foreground="Red" FontSize="11"
+                               VerticalAlignment="Center"
+                               Margin="0,0,12,0"
+                               Visibility="Collapsed"/>
+                    <Button x:Name="btnDelete"
+                            Content="Delete"
+                            Style="{StaticResource ClassicButton}"
+                            Click="BtnDelete_Click"
+                            Margin="0,0,8,0"/>
+                    <Button x:Name="btnSave"
+                            Content="Save"
+                            Style="{StaticResource ClassicButton}"
+                            Click="BtnSave_Click"
+                            Margin="0,0,8,0"/>
+                    <Button Content="Cancel"
+                            Style="{StaticResource ClassicButton}"
+                            Click="BtnCancel_Click"/>
+                </StackPanel>
+
+            </DockPanel>
         </Border>
     </Grid>
 </Page>

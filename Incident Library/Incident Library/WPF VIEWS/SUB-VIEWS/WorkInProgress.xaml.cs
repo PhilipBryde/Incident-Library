@@ -43,5 +43,18 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
 
             _ = LoadIncidentsAsync();
         }
+
+        private void IncidentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IncidentList.SelectedItem is IncidentReport selected)
+            {
+                // Hent den loggede bruger fra HomePageWindow
+                User? loggedInUser = null;
+                if (Window.GetWindow(this) is HomePageWindow__Shell_ shell)
+                    loggedInUser = shell.LoggedInUser;
+
+                NavigationService?.Navigate(new EditIncidentReport(selected, loggedInUser));
+            }
+        }
     }
 }

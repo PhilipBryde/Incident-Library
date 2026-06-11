@@ -20,7 +20,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
 
         private async System.Threading.Tasks.Task LoadIncidentsAsync()
         {
-            List<IncidentReport> incidents = await _vm.GetByStatusAsync(4);
+            List<IncidentReport> incidents = await _vm.GetByStatusAsync(3);
             if (incidents.Count == 0)
             {
                 txtEmpty.Visibility = Visibility.Visible;
@@ -48,7 +48,12 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
         {
             if (IncidentList.SelectedItem is IncidentReport selected)
             {
-                NavigationService?.Navigate(new EditIncidentReport(selected));
+                // Hent den loggede bruger fra HomePageWindow
+                User? loggedInUser = null;
+                if (Window.GetWindow(this) is HomePageWindow__Shell_ shell)
+                    loggedInUser = shell.LoggedInUser;
+
+                NavigationService?.Navigate(new EditIncidentReport(selected, loggedInUser));
             }
         }
     }

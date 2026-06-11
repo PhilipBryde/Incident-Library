@@ -6,11 +6,15 @@ namespace Incident_Library.WPF_VIEWS
 {
     public partial class HomePageWindow__Shell_ : Window
     {
+        // Den bruger der er logget ind - bruges til at styre adgang i EditIncidentReport
+        public User LoggedInUser { get; private set; } = new User();
         private Button? _activeNavButton;
 
-        public HomePageWindow__Shell_(User? LoggedInUser)
+        public HomePageWindow__Shell_(User? loggedInUser)
         {
             InitializeComponent();
+
+            LoggedInUser = loggedInUser ?? new User();
             _activeNavButton = btnWorkInProgress;
             txtPageTitle.Text = "Work In Progress";
             txtCurrentUser.Text = $"Logged in as: {LoggedInUser?.Name}";
@@ -62,10 +66,7 @@ namespace Incident_Library.WPF_VIEWS
         }
         
 
-        private void BtnEdit_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: pass selected incident to edit window
-        }
+       
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -81,8 +82,6 @@ namespace Incident_Library.WPF_VIEWS
                 txtStatus.Text = "Incident deleted.";
             }
         }
-
-       
 
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {
@@ -100,13 +99,7 @@ namespace Incident_Library.WPF_VIEWS
             }
         }
 
-        // Helpers callable from sub-views 
 
-        public void SetIncidentSelected(bool isSelected)
-        {
-            btnEdit.IsEnabled = isSelected;
-            btnDelete.IsEnabled = isSelected;
-        }
 
         public void SetIncidentCount(int count)
         {
