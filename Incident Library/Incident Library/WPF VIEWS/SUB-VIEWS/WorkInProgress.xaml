@@ -11,74 +11,87 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Sort dropdown -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="12,8">
+            <TextBlock Text="Sort by: " VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <ComboBox x:Name="SortDropdown" Width="160"
+                      SelectionChanged="SortDropdown_SelectionChanged">
+                <ComboBoxItem Content="Newest first"/>
+                <ComboBoxItem Content="Oldest first"/>
+            </ComboBox>
+        </StackPanel>
+
         <!-- Column headers -->
-        <Border Grid.Row="0" Background="#F0F0F0"
+        <Border Grid.Row="1" Background="#F0F0F0"
                 BorderBrush="#ADADAD" BorderThickness="0,0,0,1">
             <Grid Margin="12,6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="140"/>
                     <ColumnDefinition Width="130"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Title"           FontWeight="SemiBold" FontSize="12"/>
-                <TextBlock Grid.Column="1" Text="What is it?"     FontWeight="SemiBold" FontSize="12"/>
-                <TextBlock Grid.Column="2" Text="How Discovered"  FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="0" Text="Title" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="1" Text="WhatIsIncident" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="2" Text="Date" FontWeight="SemiBold" FontSize="12"/>
             </Grid>
         </Border>
 
         <!-- Incident list -->
-        <ListBox x:Name="IncidentList"
-                 Grid.Row="1"
-                 BorderThickness="0"
-                 Background="White"
-                 SelectionChanged="IncidentList_SelectionChanged">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Padding" Value="0"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="#CCE4F7"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#F0F0F0"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="#DFDFDF" BorderThickness="0,0,0,1"
-                            Padding="12,10" Cursor="Hand">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="200"/>
-                                <ColumnDefinition Width="130"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding Title}"
-                                       FontWeight="SemiBold"
-                                       TextTrimming="CharacterEllipsis"
-                                       VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="{Binding WhatIsIncident}"
-                                       FontSize="12" Foreground="#555"
-                                       TextTrimming="CharacterEllipsis"
-                                       VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="{Binding HowDiscovered}"
-                                       FontSize="12" Foreground="#555"
-                                       TextTrimming="CharacterEllipsis"
-                                       VerticalAlignment="Center"/>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="IncidentList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White"
+                                BorderBrush="#DFDFDF"
+                                BorderThickness="0,0,0,1"
+                                Padding="12,10"
+                                Cursor="Hand">
+                            <Border.Triggers>
+                                <EventTrigger RoutedEvent="Border.MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="Background.Color"
+                                                            To="#F5F5F5" Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="Border.MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetProperty="Background.Color"
+                                                            To="White" Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Border.Triggers>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="130"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Title}"
+                                           FontWeight="SemiBold" TextTrimming="CharacterEllipsis"
+                                           VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="{Binding WhatIsIncident}"
+                                           FontSize="12" Foreground="#555"
+                                           TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="2"
+                                           Text="{Binding CreatedDate, StringFormat={}{0:dd/MM/yyyy}}"
+                                           FontSize="12" Foreground="#555" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
 
         <!-- Empty state -->
-        <TextBlock Grid.Row="1" x:Name="txtEmpty"
+        <TextBlock Grid.Row="2" x:Name="txtEmpty"
                    Text="No incidents in progress."
                    Foreground="#888" FontSize="13"
                    HorizontalAlignment="Center" VerticalAlignment="Center"

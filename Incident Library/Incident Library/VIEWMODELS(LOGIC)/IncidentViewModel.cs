@@ -23,7 +23,8 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
         {
             var all = await _repo.ReadAsync();
             var filtered = all.Where(i => i.Status == statusId).ToList();
-            return all.Where(i => i.Status == statusId).ToList();
+            return _sortStrategy.Sort(filtered);
+            //return all.Where(i => i.Status == statusId).ToList();
 
         }
 
