@@ -11,10 +11,22 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Background="#F0F0F0"
+        <!-- Sort dropdown -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="12,8">
+            <TextBlock Text="Sort by: " VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <ComboBox x:Name="SortDropdown" Width="160"
+                      SelectionChanged="SortDropdown_SelectionChanged">
+                <ComboBoxItem Content="Newest first"/>
+                <ComboBoxItem Content="Oldest first"/>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Column headers -->
+        <Border Grid.Row="1" Background="#F0F0F0"
                 BorderBrush="#ADADAD" BorderThickness="0,0,0,1">
             <Grid Margin="12,6">
                 <Grid.ColumnDefinitions>
@@ -28,8 +40,9 @@
             </Grid>
         </Border>
 
+        <!-- Incident list -->
         <ListBox x:Name="IncidentList"
-                 Grid.Row="1"
+                 Grid.Row="2"
                  BorderThickness="0"
                  Background="White"
                  SelectionChanged="IncidentList_SelectionChanged">
@@ -65,17 +78,17 @@
                                        FontSize="12" Foreground="#555"
                                        TextTrimming="CharacterEllipsis"
                                        VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="{Binding HowDiscovered}"
-                                       FontSize="12" Foreground="#555"
-                                       TextTrimming="CharacterEllipsis"
-                                       VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="{Binding CreatedDate, StringFormat={}{0:dd/MM/yyyy}}"
+                                        FontSize="12" Foreground="#555"
+                                        TextTrimming="CharacterEllipsis"
+                                           VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <TextBlock Grid.Row="1" x:Name="txtEmpty"
+        <TextBlock Grid.Row="2" x:Name="txtEmpty"
                    Text="No archived incidents."
                    Foreground="#888" FontSize="13"
                    HorizontalAlignment="Center" VerticalAlignment="Center"

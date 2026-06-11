@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Incident_Library.MODELS__Data_;
+using Incident_Library.SORTING;
+using Incident_Library.VIEWMODELS_LOGIC_;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using Incident_Library.MODELS__Data_;
-using Incident_Library.VIEWMODELS_LOGIC_;
 
 namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
 {
@@ -13,6 +14,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
         public Archived()
         {
             InitializeComponent();
+            SortDropdown.SelectedIndex = 0;
             Loaded += async (s, e) => await LoadIncidentsAsync();
         }
 
@@ -38,6 +40,16 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             {
                 NavigationService?.Navigate(new EditIncidentReport(selected));
             }
+        }
+
+        private void SortDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SortDropdown.SelectedIndex == 0)
+                _vm.SetSortStrategy(new SortbyDateNewest());
+            else
+                _vm.SetSortStrategy(new SortByDateOldest());
+
+            LoadIncidentsAsync();
         }
     }
 }
