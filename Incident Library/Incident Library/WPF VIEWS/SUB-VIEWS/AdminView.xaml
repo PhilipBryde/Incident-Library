@@ -139,12 +139,12 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="120"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="{Binding PersonID}"
+                                    <TextBlock Grid.Column="0" Text="{Binding UserId}"
                                                FontSize="12" Foreground="#555" VerticalAlignment="Center"/>
                                     <TextBlock Grid.Column="1" Text="{Binding Name}"
                                                FontWeight="SemiBold" VerticalAlignment="Center"/>
                                     <Border Grid.Column="2" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding RoleName}"
+                                        <TextBlock Text="{Binding Role}"
                                                    FontSize="12" Foreground="#555"/>
                                     </Border>
                                 </Grid>
@@ -160,42 +160,10 @@
                        HorizontalAlignment="Center" VerticalAlignment="Center"
                        Visibility="Collapsed"/>
             
-            <!-- Section header: Incidents -->
-            <Border Grid.Row="3" Background="#F0F0F0"
-        BorderBrush="#ADADAD" BorderThickness="0,0,0,1"
-        Padding="12,8">
-                <TextBlock Text="Incident Management" FontSize="13" FontWeight="SemiBold"/>
-            </Border>
+            
 
-            <!-- Incident list -->
-            <ScrollViewer Grid.Row="4" VerticalScrollBarVisibility="Auto">
-                <ListBox x:Name="IncidentList" BorderThickness="0" Background="White">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Border BorderBrush="#DFDFDF" BorderThickness="0,0,0,1" Padding="12,8">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="40"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="100"/>
-                                        <ColumnDefinition Width="70"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="{Binding Id}"
-                                   FontSize="12" Foreground="#555" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding Title}"
-                                   FontWeight="SemiBold" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="2" Text="{Binding Status}"
-                                   FontSize="12" Foreground="#555" VerticalAlignment="Center"/>
-                                    <Button Grid.Column="3" Content="Edit"
-                                Tag="{Binding}"
-                                Click="BtnEditIncident_Click"
-                                Style="{StaticResource ClassicButton}"/>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </ScrollViewer>
+            
+           
 
         </Grid>
     </Grid>

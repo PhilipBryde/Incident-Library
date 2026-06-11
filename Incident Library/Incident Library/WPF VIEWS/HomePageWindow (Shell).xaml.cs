@@ -8,11 +8,12 @@ namespace Incident_Library.WPF_VIEWS
     {
         private Button? _activeNavButton;
 
-        public HomePageWindow__Shell_()
+        public HomePageWindow__Shell_(User? LoggedInUser)
         {
             InitializeComponent();
             _activeNavButton = btnWorkInProgress;
             txtPageTitle.Text = "Work In Progress";
+            txtCurrentUser.Text = $"Logged in as: {LoggedInUser?.Name}";
             ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.WorkInProgress());
         }
 

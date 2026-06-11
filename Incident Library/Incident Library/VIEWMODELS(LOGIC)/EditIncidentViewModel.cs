@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Incident_Library.INTERFACES;
 using Incident_Library.MODELS__Data_;
 using Incident_Library.Repository;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Incident_Library.VIEWMODELS_LOGIC_
 {
     public class EditIncidentViewModel
     {
-        private readonly IncidentRepository _repo = new IncidentRepository();
+        private readonly IIncidentRepository _repo = new IncidentRepository();
 
         public IncidentReport Incident { get; set; }
 

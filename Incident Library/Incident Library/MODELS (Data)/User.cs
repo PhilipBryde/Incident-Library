@@ -4,22 +4,21 @@ using System.Text;
 
 namespace Incident_Library.MODELS__Data_
 {
-    class User
+    public class User
     {
-        private int _userId;
-        private string _username;
-        private string _password;
-        private int _roleId;
+        public int UserId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public int Role { get; set; } 
 
-        public User (int userId, string username, string password, int roleId)
+        public User(int userId, string name, string password, int role)
         {
-            _userId = userId;
-            _username = username;
-            _password = password;
-            _roleId = roleId;
+            UserId = userId;
+            Name = name;
+            Password = password;
+            Role = role;
         }
-
-       
-       
+        // den tomme Konstruktør er til når vi henter objekter fra databasen 
+        public User() { }
     }
 }
