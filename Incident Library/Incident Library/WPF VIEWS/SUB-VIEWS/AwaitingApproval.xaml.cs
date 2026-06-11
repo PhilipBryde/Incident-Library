@@ -16,9 +16,9 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             Loaded += async (s, e) => await LoadIncidentsAsync();
         }
 
-        private async System.Threading.Tasks.Task LoadIncidentsAsync()
+        private async Task LoadIncidentsAsync()
         {
-            List<IncidentReport> incidents = await _vm.GetByStatusAsync(4);
+            List<IncidentReport> incidents = await _vm.GetByStatusAsync(3);
             if (incidents.Count == 0)
             {
                 txtEmpty.Visibility = Visibility.Visible;
