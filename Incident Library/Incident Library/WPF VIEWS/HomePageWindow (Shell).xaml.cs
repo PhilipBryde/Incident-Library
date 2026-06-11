@@ -7,7 +7,7 @@ namespace Incident_Library.WPF_VIEWS
     public partial class HomePageWindow__Shell_ : Window
     {
         // Den bruger der er logget ind - bruges til at styre adgang i EditIncidentReport
-        public User LoggedInUser { get; private set; } = new User();
+        public User LoggedInUser { get; private set; } = new User(); //Rasmus
         private Button? _activeNavButton;
 
         public HomePageWindow__Shell_(User? loggedInUser)
@@ -18,7 +18,7 @@ namespace Incident_Library.WPF_VIEWS
             _activeNavButton = btnWorkInProgress;
             txtPageTitle.Text = "Work In Progress";
             txtCurrentUser.Text = $"Logged in as: {LoggedInUser?.Name}";
-            // Skjul Admin Panel hvis brugeren ikke er admin
+            // Skjul Admin Panel hvis brugeren ikke er admin - Rasmus
             if (LoggedInUser.Role != 1)
             {
                 btnAdmin.Visibility = Visibility.Collapsed;

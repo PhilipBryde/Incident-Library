@@ -7,7 +7,7 @@ using System.Text;
 namespace Incident_Library.SORTING
 {
     public class SortByDateOldest : ISortStrategy
-    {
+    { // Rasmus
         public List<IncidentReport> Sort(List<IncidentReport> incidents)
         {
             for (int i = 0; i < incidents.Count - 1; i++)

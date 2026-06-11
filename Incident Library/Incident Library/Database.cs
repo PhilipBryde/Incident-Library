@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 
 namespace Incident_Library
-{
+{ //Rasmus
     internal class Database
     {
         public static string ConnectionString

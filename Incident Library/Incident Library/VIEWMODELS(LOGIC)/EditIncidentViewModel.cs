@@ -19,7 +19,7 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
             Incident = i;
         }
 
-        // Henter labels fra databasen og sætter dem på incident objektet
+        // Henter labels fra databasen og sætter dem på incident objektet - Rasmus
         public async Task LoadLabelsAsync()
         {
             if (Incident.Id != 0)
@@ -30,7 +30,7 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
         {
             if (Incident.Id == 0)
             {
-                Incident.CreatedDate = DateTime.Now;
+                Incident.CreatedDate = DateTime.Now; //Rasmus
                 await _repo.CreateAsync(Incident);
             }
             else
@@ -38,7 +38,7 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
                 await _repo.UpdateAsync(Incident);
             }
 
-            // Gem labels - slet gamle og indsæt nye
+            // Gem labels - slet gamle og indsæt nye - Rasmus
             if (Incident.Id != 0)
             {
                 await _labelRepo.DeleteByIncidentIdAsync(Incident.Id);
@@ -53,7 +53,7 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
         public async Task DeleteAsync() //Asynkron metode der sletter incident; sendes videre til Repository
         {
             // Slet labels først, derefter incident
-            await _labelRepo.DeleteByIncidentIdAsync(Incident.Id);
+            await _labelRepo.DeleteByIncidentIdAsync(Incident.Id); //Rasmus
             await _repo.DeleteAsync(Incident);
         }
     }

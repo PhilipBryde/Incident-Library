@@ -5,8 +5,8 @@ using System.Text;
 using Incident_Library.MODELS__Data_;
 using System.Runtime.ExceptionServices;
 
-namespace Incident_Library.SORTING
-{
+namespace Incident_Library.SORTING 
+{ // Rasmus
     public class SortbyDateNewest : ISortStrategy
     {
         public List<IncidentReport> Sort(List<IncidentReport> incidents)

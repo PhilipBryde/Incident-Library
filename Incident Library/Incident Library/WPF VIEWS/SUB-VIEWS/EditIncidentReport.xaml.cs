@@ -162,7 +162,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             NavigationService?.GoBack();
         }
 
-        // Sender incident videre til Awaiting Approval
+        // Sender incident videre til Awaiting Approval - Rasmus
         private async void BtnSendToApproval_Click(object sender, RoutedEventArgs e)
         {
             //MessageBox.Show($"Nuværende status: {_vm.Incident.Status}");
@@ -171,7 +171,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             NavigationService?.GoBack();
         }
 
-        // Godkender incident og sender til Archived
+        // Godkender incident og sender til Archived - Rasmus
         private async void BtnApprove_Click(object sender, RoutedEventArgs e)
         {
             _vm.Incident.Status = 4;
@@ -179,7 +179,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             NavigationService?.GoBack();
         }
 
-        // Afviser incident og sender tilbage til Work In Progress
+        // Afviser incident og sender tilbage til Work In Progress - Rasmus
         private async void BtnDecline_Click(object sender, RoutedEventArgs e)
         {
             _vm.Incident.Status = 1;
@@ -187,7 +187,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             NavigationService?.GoBack();
         }
 
-        private async void BtnSave_Click(object sender, RoutedEventArgs e) //Save Knap; sender brugers input videre til ViewModel
+        private async void BtnSave_Click(object sender, RoutedEventArgs e) //Save Knap; sender brugers input videre til ViewModel - Rasmus
         {
             _vm.Incident.Title = txtTitle.Text;
             _vm.Incident.HowDiscovered = txtHowDiscovered.Text;
@@ -195,7 +195,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             _vm.Incident.HowResolved = txtHowResolved.Text;
             _vm.Incident.Status = cmbStatus.SelectedIndex + 1;
 
-            // Saml labels fra panelet og gem dem på incident objektet
+            // Saml labels fra panelet og gem dem på incident objektet - Rasmus
             _vm.Incident.Labels.Clear();
             foreach (var child in labelsPanel.Children)
             {

@@ -7,7 +7,7 @@ using Incident_Library.MODELS__Data_;
 using Incident_Library.Repository;
 
 namespace Incident_Library.VIEWMODELS_LOGIC_
-{
+{ //Rasmus
     public class AdminViewModel
     {
         private readonly IUserRepository _userRepo = new UserRepository();

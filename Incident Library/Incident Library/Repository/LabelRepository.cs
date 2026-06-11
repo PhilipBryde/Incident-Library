@@ -7,7 +7,7 @@ using Microsoft.Data.Sqlite;
 using Incident_Library.MODELS__Data_;
 
 namespace Incident_Library.Repository
-{
+{ // Rasmus
     public class LabelRepository
     {
         // Henter alle labels tilknyttet et bestemt incident

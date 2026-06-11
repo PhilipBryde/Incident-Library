@@ -5,7 +5,7 @@ using System.Text;
 namespace Incident_Library.MODELS__Data_
 {
     public class User
-    {
+    { //Rasmus
         public int UserId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;

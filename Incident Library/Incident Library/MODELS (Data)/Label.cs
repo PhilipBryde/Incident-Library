@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Incident_Library.MODELS__Data_
 {
+    //Rasmus
     public class Label
     {
         public int LabelId { get; set; }

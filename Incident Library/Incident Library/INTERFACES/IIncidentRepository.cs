@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Incident_Library.INTERFACES
-{
+{//Rasmus
     public interface IIncidentRepository
     {
         // Henter alle incidents fra databasen

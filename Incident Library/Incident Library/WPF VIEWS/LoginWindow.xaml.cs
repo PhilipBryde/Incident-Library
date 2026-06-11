@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 
 namespace Incident_Library.WPF_VIEWS
-{
+{ //Rasmus 
     public partial class LoginWindow : Window
     {
         private readonly LoginViewModel _vm = new LoginViewModel();
