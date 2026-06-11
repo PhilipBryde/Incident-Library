@@ -32,6 +32,7 @@ namespace Incident_Library.Repository
                 i.WhatIsIncident = reader["WhatIsIncident"] as string;
                 i.HowResolved = reader["HowResolved"] as string;
                 i.Status = Convert.ToInt32(reader["StatusID"]);
+                i.CreatedDate = Convert.ToDateTime(reader["CreatedDate"]);
 
                 incidentList.Add(i);
             }
@@ -43,12 +44,13 @@ namespace Incident_Library.Repository
             SqliteConnection connection = new SqliteConnection("Data Source=IncidentLibrary.db;");
             await connection.OpenAsync();
 
-            SqliteCommand command = new SqliteCommand("INSERT INTO Incident (Title, HowDiscovered, WhatIsIncident, HowResolved, StatusID) VALUES (@Title, @HowDiscovered, @WhatIsIncident, @HowResolved, @StatusID)", connection);
+            SqliteCommand command = new SqliteCommand("INSERT INTO Incident (Title, HowDiscovered, WhatIsIncident, HowResolved, StatusID, CreatedDate) VALUES (@Title, @HowDiscovered, @WhatIsIncident, @HowResolved, @StatusID, @CreatedDate)", connection);
             command.Parameters.AddWithValue("@Title", i.Title);
             command.Parameters.AddWithValue("@HowDiscovered", i.HowDiscovered);
             command.Parameters.AddWithValue("@WhatIsIncident", i.WhatIsIncident);
             command.Parameters.AddWithValue("@HowResolved", i.HowResolved);
             command.Parameters.AddWithValue("@StatusID", i.Status);
+            command.Parameters.AddWithValue("@CreatedDate", i.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss"));
 
            await command.ExecuteNonQueryAsync();
             await connection.CloseAsync();

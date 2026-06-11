@@ -4,17 +4,27 @@ using System.Text;
 using System.Linq;
 using Incident_Library.Repository;
 using Incident_Library.MODELS__Data_;
+using Incident_Library.INTERFACES;
+using Incident_Library.SORTING;
 
 namespace Incident_Library.VIEWMODELS_LOGIC_
 {
    class IncidentViewModel
     {
         private readonly IncidentRepository _repo = new IncidentRepository();
+        private ISortStrategy _sortStrategy = new SortbyDateNewest();
+
+        public void SetSortStrategy(ISortStrategy strategy)
+        {  
+            _sortStrategy = strategy; 
+        }
 
         public async Task<List<IncidentReport>> GetByStatusAsync(int statusId)
         {
             var all = await _repo.ReadAsync();
+            var filtered = all.Where(i => i.Status == statusId).ToList();
             return all.Where(i => i.Status == statusId).ToList();
+
         }
 
         public async Task SaveIncidentAsync(string title, string howDiscovered, string whatIsIncident, string howResolved, int statusId)
@@ -25,7 +35,8 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
                 HowDiscovered = howDiscovered,
                 WhatIsIncident = whatIsIncident,
                 HowResolved = howResolved,
-                Status = statusId
+                Status = statusId,
+                CreatedDate = DateTime.Now
             };
 
             await _repo.CreateAsync(incident);

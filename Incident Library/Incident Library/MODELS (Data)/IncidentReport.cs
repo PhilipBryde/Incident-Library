@@ -13,6 +13,8 @@ namespace Incident_Library.MODELS__Data_
         public string WhatIsIncident { get; set; }
         public string HowResolved { get; set; }
         public int Status { get; set; }
+
+        public DateTime CreatedDate { get; set; }
     }
 
 
