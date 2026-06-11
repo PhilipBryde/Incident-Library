@@ -41,7 +41,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
             else
                 _vm.SetSortStrategy(new SortByDateOldest());
 
-            LoadIncidentsAsync();
+            _ = LoadIncidentsAsync();
         }
     }
 }
