@@ -17,5 +17,18 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
         {
             return await _userRepo.GetAllAsync();
         }
+
+        // Sletter en bruger fra databasen og opdaterer listen
+        public async Task DeleteUserAsync(User user)
+        {
+            await _userRepo.DeleteAsync(user);
+        }
+
+        // Skifter brugerens rolle mellem Admin (1) og User (2)
+        public async Task ToggleRoleAsync(User user)
+        {
+            user.Role = user.Role == 1 ? 2 : 1;
+            await _userRepo.UpdateRoleAsync(user);
+        }
     }
 }

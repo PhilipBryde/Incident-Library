@@ -12,5 +12,11 @@ namespace Incident_Library.INTERFACES
 
         // Henter alle brugere - bruges i Admin Panel
         Task<List<User>> GetAllAsync();
+
+        // Sletter en bruger fra databasen
+        Task DeleteAsync(User user);
+
+        // Opdaterer en brugers rolle
+        Task UpdateRoleAsync(User user);
     }
 }

@@ -68,5 +68,32 @@ namespace Incident_Library.Repository
 
             return users;
         }
+
+        // Sletter en bruger fra databasen baseret på brugerens ID
+        public async Task DeleteAsync(User user)
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            await connection.OpenAsync();
+
+            using var command = new SqliteCommand(
+                "DELETE FROM User WHERE UserID = @id", connection);
+            command.Parameters.AddWithValue("@id", user.UserId);
+
+            await command.ExecuteNonQueryAsync();
+        }
+
+        // Opdaterer en brugers rolle i databasen
+        public async Task UpdateRoleAsync(User user)
+        {
+            using var connection = new SqliteConnection(Database.ConnectionString);
+            await connection.OpenAsync();
+
+            using var command = new SqliteCommand(
+                "UPDATE User SET Role = @Role WHERE UserID = @id", connection);
+            command.Parameters.AddWithValue("@Role", user.Role);
+            command.Parameters.AddWithValue("@id", user.UserId);
+
+            await command.ExecuteNonQueryAsync();
+        }
     }
 }
