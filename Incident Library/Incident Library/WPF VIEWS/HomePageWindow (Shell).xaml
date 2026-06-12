@@ -159,33 +159,8 @@
                         Style="{StaticResource ClassicButton}"
                         Click="BtnNewIncident_Click"
                         Margin="0,0,4,0"/>
-                <Button x:Name="btnEdit"
-                        Content="Edit"
-                        Style="{StaticResource ClassicButton}"
-                        Click="BtnEdit_Click"
-                        IsEnabled="False"
-                        Margin="0,0,4,0"/>
-                <Button x:Name="btnDelete"
-                        Content="Delete"
-                        Style="{StaticResource ClassicButton}"
-                        Click="BtnDelete_Click"
-                        IsEnabled="False"
-                        Margin="0,0,8,0"/>
-                <Border BorderBrush="#7A7A7A" BorderThickness="1" Background="White"
-                        Height="22" VerticalAlignment="Center">
-                    <TextBox x:Name="txtSearch"
-                             Width="200" Height="22"
-                             BorderThickness="0"
-                             Background="White"
-                             Padding="4,2"
-                             FontSize="12"
-                             VerticalAlignment="Center"
-                             TextChanged="TxtSearch_TextChanged"/>
-                </Border>
-                <Button Content="Search"
-                        Style="{StaticResource ClassicButton}"
-                        Click="BtnSearch_Click"
-                        Margin="4,0,0,0"/>
+                
+               
             </StackPanel>
         </Border>
 

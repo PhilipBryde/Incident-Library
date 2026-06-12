@@ -5,6 +5,10 @@ using System.IO;
 
 namespace Incident_Library.MODELS__Data_
 {
+    /// <summary>
+    /// Datamodel der repræsenterer en incident i systemet
+    /// Bruges af IncidentRepository til database og ViewModels til sortering og visning
+    /// </summary>
     public class IncidentReport
     {
         public int Id { get; set; }
@@ -13,6 +17,11 @@ namespace Incident_Library.MODELS__Data_
         public string WhatIsIncident { get; set; }
         public string HowResolved { get; set; }
         public int Status { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+        // Liste af labels tilknyttet dette incident
+        public List<Label> Labels { get; set; } = new List<Label>();
+
     }
 
 

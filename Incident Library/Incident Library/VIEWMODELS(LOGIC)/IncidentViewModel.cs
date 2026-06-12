@@ -4,20 +4,31 @@ using System.Text;
 using System.Linq;
 using Incident_Library.Repository;
 using Incident_Library.MODELS__Data_;
+using Incident_Library.INTERFACES;
+using Incident_Library.SORTING;
 
 namespace Incident_Library.VIEWMODELS_LOGIC_
 {
    class IncidentViewModel
     {
-        private readonly IncidentRepository _repo = new IncidentRepository();
+        private readonly IIncidentRepository _repo = new IncidentRepository();
+        private ISortStrategy _sortStrategy = new SortbyDateNewest();
 
-        public async Task<List<IncidentReport>> GetByStatusAsync(int statusId)
-        {
-            var all = await _repo.ReadAsync();
-            return all.Where(i => i.Status == statusId).ToList();
+        public void SetSortStrategy(ISortStrategy strategy)
+        {  
+            _sortStrategy = strategy; 
         }
 
-        public async Task SaveIncidentAsync(string title, string howDiscovered, string whatIsIncident, string howResolved, int statusId)
+        public async Task<List<IncidentReport>> GetByStatusAsync(int statusId) //Henter incident via StatusID; sendes videre til Repository
+        {
+            var all = await _repo.ReadAsync();
+            var filtered = all.Where(i => i.Status == statusId).ToList();
+            return _sortStrategy.Sort(filtered);
+            //return all.Where(i => i.Status == statusId).ToList();
+
+        }
+
+        public async Task SaveIncidentAsync(string title, string howDiscovered, string whatIsIncident, string howResolved, int statusId) //Brugerens input bliver lavet til et IncidentReport-objekt
         {
             IncidentReport incident = new IncidentReport
             {
@@ -25,10 +36,11 @@ namespace Incident_Library.VIEWMODELS_LOGIC_
                 HowDiscovered = howDiscovered,
                 WhatIsIncident = whatIsIncident,
                 HowResolved = howResolved,
-                Status = statusId
+                Status = statusId,
+                CreatedDate = DateTime.Now
             };
 
-            await _repo.CreateAsync(incident);
+            await _repo.CreateAsync(incident); //Kalder Create i Repository
         }
 
         public async Task<List<IncidentReport>> GetAllAsync()

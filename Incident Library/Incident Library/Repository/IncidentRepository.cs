@@ -4,10 +4,14 @@ using System.Text;
 using System.IO;
 using Microsoft.Data.Sqlite;
 using Incident_Library.MODELS__Data_;
+using Incident_Library.INTERFACES;
 
 namespace Incident_Library.Repository
 {
-    public class IncidentRepository
+    /// <summary>
+    /// Repository klasse med CRUD-kald, tager og gemmer data til/fra databasen
+    /// </summary>
+    public class IncidentRepository : IIncidentRepository
     {
 
         //private static string GetConnectionString()
@@ -16,10 +20,10 @@ namespace Incident_Library.Repository
         //    string dbPath = Path.Combine(baseDir, "IncidentLibrary.db");
         //    return $"Data Source={dbPath};";
         //}
-        public async Task<List<IncidentReport>> ReadAsync() //Læser fra databasen og sætter den ind i en liste
+        public async Task<List<IncidentReport>> ReadAsync() //Læser fra databasen og returnerer dem som en liste af IncidentReport-objekter
         {
             var incidentList = new List<IncidentReport>();
-            using var conncetion = new SqliteConnection("Data Source = IncidentLibrary.db;");
+            using var conncetion = new SqliteConnection(Database.ConnectionString);
             await conncetion.OpenAsync();
             using var command = new SqliteCommand("SELECT * FROM Incident", conncetion);
             using var reader = await command.ExecuteReaderAsync();
@@ -32,23 +36,25 @@ namespace Incident_Library.Repository
                 i.WhatIsIncident = reader["WhatIsIncident"] as string;
                 i.HowResolved = reader["HowResolved"] as string;
                 i.Status = Convert.ToInt32(reader["StatusID"]);
+                i.CreatedDate = Convert.ToDateTime(reader["CreatedDate"]);
 
                 incidentList.Add(i);
             }
             return incidentList;
         }
 
-        public async Task CreateAsync (IncidentReport i) //Opretter nyt incident til databasen; bemærk at vi siger Close her fordi vi ikke bruger 'using var' (tilføjede bare for at vise at vi kunne)
+        public async Task CreateAsync (IncidentReport i) //Opretter nyt incident til databasen; bemærk at vi bruger en alternativ forbindelsesstrukter uden using var, viser en anden måde at åbne og lukke
         {
-            SqliteConnection connection = new SqliteConnection("Data Source=IncidentLibrary.db;");
+            SqliteConnection connection = new SqliteConnection(Database.ConnectionString);
             await connection.OpenAsync();
 
-            SqliteCommand command = new SqliteCommand("INSERT INTO Incident (Title, HowDiscovered, WhatIsIncident, HowResolved, StatusID) VALUES (@Title, @HowDiscovered, @WhatIsIncident, @HowResolved, @StatusID)", connection);
+            SqliteCommand command = new SqliteCommand("INSERT INTO Incident (Title, HowDiscovered, WhatIsIncident, HowResolved, StatusID, CreatedDate) VALUES (@Title, @HowDiscovered, @WhatIsIncident, @HowResolved, @StatusID, @CreatedDate)", connection);
             command.Parameters.AddWithValue("@Title", i.Title);
             command.Parameters.AddWithValue("@HowDiscovered", i.HowDiscovered);
             command.Parameters.AddWithValue("@WhatIsIncident", i.WhatIsIncident);
             command.Parameters.AddWithValue("@HowResolved", i.HowResolved);
             command.Parameters.AddWithValue("@StatusID", i.Status);
+            command.Parameters.AddWithValue("@CreatedDate", i.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss"));
 
            await command.ExecuteNonQueryAsync();
             await connection.CloseAsync();
@@ -56,7 +62,7 @@ namespace Incident_Library.Repository
 
         public async Task DeleteAsync(IncidentReport i) //Sletter incident fra databasen
         {
-            using var connection = new SqliteConnection("Data Source=IncidentLibrary.db;");
+            using var connection = new SqliteConnection(Database.ConnectionString);
             await connection.OpenAsync();
             using var command = connection.CreateCommand();
             command.CommandText = "DELETE FROM Incident WHERE IncidentID = @id";
@@ -66,7 +72,7 @@ namespace Incident_Library.Repository
 
         public async Task UpdateAsync(IncidentReport i) //Opdaterer databasen
         {
-            using var connection = new SqliteConnection("Data Source=IncidentLibrary.db;");
+            using var connection = new SqliteConnection(Database.ConnectionString);
             await connection.OpenAsync();
             using var command = new SqliteCommand("UPDATE Incident SET Title = @Title, HowDiscovered = @HowDiscovered, WhatIsIncident = @WhatIsIncident, HowResolved = @HowResolved, StatusID = @StatusID WHERE IncidentID = @id", connection);
             command.Parameters.AddWithValue("@Title", i.Title);

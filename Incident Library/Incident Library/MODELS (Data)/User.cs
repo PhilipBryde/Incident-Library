@@ -4,39 +4,32 @@ using System.Text;
 
 namespace Incident_Library.MODELS__Data_
 {
-    class User
-    {
-        private int _userId;
-        private string _username;
-        private string _password;
-        private int _roleId;
+    public class User
+    { //Rasmus
+        public int UserId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public int Role { get; set; } 
 
-        public User (int userId, string username, string password, int roleId)
+        public User(int userId, string name, string password, int role)
         {
-            _userId = userId;
-            _username = username;
-            _password = password;
-            _roleId = roleId;
+            UserId = userId;
+            Name = name;
+            Password = password;
+            Role = role;
         }
+        // den tomme Konstruktør er til når vi henter objekter fra databasen 
+        public User() { }
 
-        // ── WPF-bindbare properties ──────────────────────────────────────
-        // Bruges af AdminView XAML til {Binding UserId}, {Binding Username} osv.
-        public int UserId => _userId;
-        public string UserName => _username;
-        public string Password => _password;
-        public int RoleId => _roleId;
-
-        // ── Getters (bruges i C#-kode) ───────────────────────────────────
-        public int GetUserId() => _userId;
-        public string GetUserName() => _username;
-        public string GetPassword() => _password;
-        public int GetRoleId() => _roleId;
-
-        // Setter — kun password må ændres
-        public void SetPassword(string password) { _password = password; }
-
-        // Hjælpemetode til at tjekke om brugeren er admin (RoleId 2 = Admin)
-
-        public bool IsAdmin() => _roleId == 2;
+        // Oversætter rolle-tallet til et læsbart navn
+        public string RoleName
+        {
+            get
+            {
+                if (Role == 1) return "Admin";
+                if (Role == 2) return "User";
+                return "Unknown";
+            }
+        }
     }
 }

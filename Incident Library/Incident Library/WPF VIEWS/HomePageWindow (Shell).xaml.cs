@@ -6,13 +6,23 @@ namespace Incident_Library.WPF_VIEWS
 {
     public partial class HomePageWindow__Shell_ : Window
     {
+        // Den bruger der er logget ind - bruges til at styre adgang i EditIncidentReport
+        public User LoggedInUser { get; private set; } = new User(); //Rasmus
         private Button? _activeNavButton;
 
-        public HomePageWindow__Shell_()
+        public HomePageWindow__Shell_(User? loggedInUser)
         {
             InitializeComponent();
+
+            LoggedInUser = loggedInUser ?? new User();
             _activeNavButton = btnWorkInProgress;
             txtPageTitle.Text = "Work In Progress";
+            txtCurrentUser.Text = $"Logged in as: {LoggedInUser?.Name}";
+            // Skjul Admin Panel hvis brugeren ikke er admin - Rasmus
+            if (LoggedInUser.Role != 1)
+            {
+                btnAdmin.Visibility = Visibility.Collapsed;
+            }
             ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.WorkInProgress());
         }
 
@@ -61,10 +71,7 @@ namespace Incident_Library.WPF_VIEWS
         }
         
 
-        private void BtnEdit_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: pass selected incident to edit window
-        }
+       
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -79,24 +86,6 @@ namespace Incident_Library.WPF_VIEWS
                 // TODO: call IncidentRepository.DeleteAsync(selectedId)
                 txtStatus.Text = "Incident deleted.";
             }
-        }
-
-        private void BtnSearch_Click(object sender, RoutedEventArgs e)
-        {
-            RunSearch();
-        }
-
-        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
-        }
-
-        private void RunSearch()
-        {
-            string query = txtSearch.Text.Trim();
-            if (string.IsNullOrEmpty(query)) return;
-            txtStatus.Text = $"Searching for: \"{query}\"...";
-            // TODO: call IncidentExplorerViewModel.SearchAsync(query)
         }
 
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
@@ -115,13 +104,7 @@ namespace Incident_Library.WPF_VIEWS
             }
         }
 
-        // Helpers callable from sub-views 
 
-        public void SetIncidentSelected(bool isSelected)
-        {
-            btnEdit.IsEnabled = isSelected;
-            btnDelete.IsEnabled = isSelected;
-        }
 
         public void SetIncidentCount(int count)
         {
