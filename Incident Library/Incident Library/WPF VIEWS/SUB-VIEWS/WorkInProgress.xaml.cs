@@ -14,8 +14,8 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
         public WorkInProgress()
         {
             InitializeComponent();
-            SortDropdown.SelectedIndex = 0;
-            Loaded += async (s, e) => await LoadIncidentsAsync();
+            SortDropdown.SelectedIndex = 0; //Automatisk vælger første index i sort dropdown
+            Loaded += async (s, e) => await LoadIncidentsAsync(); //Loader alt data hvergang page vises (fremfor cache)
         }
 
         private async Task LoadIncidentsAsync()

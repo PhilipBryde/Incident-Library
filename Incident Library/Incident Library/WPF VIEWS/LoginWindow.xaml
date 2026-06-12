@@ -85,7 +85,7 @@
                 <TextBlock Text="📋" FontSize="20" VerticalAlignment="Center" Margin="0,0,10,0"/>
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Text="Incident Library" FontSize="14" FontWeight="SemiBold"/>
-                    <TextBlock Text="Please sign in to continue" FontSize="11" Foreground="#555"/>
+                    <TextBlock Text="Please sign in to continue using admin and admin123" FontSize="11" Foreground="#555"/>
                 </StackPanel>
             </StackPanel>
         </Border>
