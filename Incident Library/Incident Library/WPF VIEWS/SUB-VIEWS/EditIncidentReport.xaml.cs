@@ -203,7 +203,7 @@ namespace Incident_Library.WPF_VIEWS.SUB_VIEWS
                 {
                     if (panel.Children[0] is TextBlock txt)
                     {
-                        _vm.Incident.Labels.Add(new Incident_Library.MODELS__Data_.Label // _vm.Incident.Labels.Add(new Label = synes åbenbart det var dårligt skrevet
+                        _vm.Incident.Labels.Add(new MODELS__Data_.Label // _vm.Incident.Labels.Add(new Label = synes åbenbart det var dårligt skrevet
                         {
                             Name = txt.Text,
                             IncidentId = _vm.Incident.Id

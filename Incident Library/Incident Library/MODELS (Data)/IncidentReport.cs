@@ -8,6 +8,7 @@ namespace Incident_Library.MODELS__Data_
     /// <summary>
     /// Datamodel der repræsenterer en incident i systemet
     /// Bruges af IncidentRepository til database og ViewModels til sortering og visning
+    /// Sidney
     /// </summary>
     public class IncidentReport
     {

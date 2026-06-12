@@ -70,24 +70,6 @@ namespace Incident_Library.WPF_VIEWS
             ContentArea.Navigate(new Incident_Library.WPF_VIEWS.SUB_VIEWS.EditIncidentReport(newIncident));
         }
         
-
-       
-
-        private void BtnDelete_Click(object sender, RoutedEventArgs e)
-        {
-            var result = MessageBox.Show(
-                "Are you sure you want to delete this incident?",
-                "Confirm Delete",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Warning);
-
-            if (result == MessageBoxResult.Yes)
-            {
-                // TODO: call IncidentRepository.DeleteAsync(selectedId)
-                txtStatus.Text = "Incident deleted.";
-            }
-        }
-
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show(
@@ -103,8 +85,6 @@ namespace Incident_Library.WPF_VIEWS
                 this.Close();
             }
         }
-
-
 
         public void SetIncidentCount(int count)
         {

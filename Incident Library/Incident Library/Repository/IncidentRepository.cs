@@ -10,16 +10,10 @@ namespace Incident_Library.Repository
 {
     /// <summary>
     /// Repository klasse med CRUD-kald, tager og gemmer data til/fra databasen
+    /// Sidney
     /// </summary>
     public class IncidentRepository : IIncidentRepository
     {
-
-        //private static string GetConnectionString()
-        //{
-        //    string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        //    string dbPath = Path.Combine(baseDir, "IncidentLibrary.db");
-        //    return $"Data Source={dbPath};";
-        //}
         public async Task<List<IncidentReport>> ReadAsync() //Læser fra databasen og returnerer dem som en liste af IncidentReport-objekter
         {
             var incidentList = new List<IncidentReport>();
